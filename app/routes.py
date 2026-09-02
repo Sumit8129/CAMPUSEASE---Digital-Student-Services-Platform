@@ -1,3 +1,4 @@
+import os
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_user, current_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -42,6 +43,15 @@ def login():
         user = User.query.filter_by(roll_number=form.roll_number.data).first()
         if user and check_password_hash(user.password_hash, form.password.data):
             login_user(user)
+            
+            # --- SECURE ROLL NUMBER ADMIN CHECK ---
+            admin_roll = os.environ.get('ADMIN_ROLL_NUMBER')
+            if admin_roll and str(user.roll_number) == str(admin_roll):
+                if user.role != 'admin':
+                    user.role = 'admin'
+                    db.session.commit()
+            # --------------------------------------
+            
             return redirect(url_for('main.dashboard'))
         else:
             flash('Login Unsuccessful. Please check roll number and password.', 'danger')
