@@ -10,4 +10,8 @@ A centralized student services platform built with Flask, SQLAlchemy, Flask-Logi
 - Secure Profile Management & Password Reset
 
 ---
+<<<<<<< HEAD
 *Note: Developed with the assistance of AI pair-programming.*
+=======
+*Note: Developed with the assistance of AI pair-programming.*
+>>>>>>> aa11109583ce3c93c1e6e379b1b95523335bc163
